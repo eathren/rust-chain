@@ -6,6 +6,21 @@ pub struct Transaction{
     amount: u32,
 }
 
+impl Transaction{
+    pub fn new(
+        version: u16,
+        source: String,
+        destination: String,
+        amount: u32,
+    ) -> Self{
+        Self{
+            version,
+            source,
+            destination,
+            amount,
+        }
+    }
+}
 
 
 // Data for each transaction:
