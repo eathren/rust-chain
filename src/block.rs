@@ -9,7 +9,7 @@ pub struct Block{
     version: u16,
     nonce: u16,
     merkle: u32,
-    tx: Vec<Transaction>,
+    pub tx: Vec<Transaction>,
 }
 
 impl Block{
@@ -31,6 +31,11 @@ impl Block{
             merkle,
             tx
         }
+    }
+
+    // adds transaction to Block.tx
+    pub fn add_transaction(&mut self, new_tx:Transaction) {
+        self.tx.push(new_tx);
     }
 }
 
