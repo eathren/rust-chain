@@ -1,5 +1,5 @@
 use crate::transaction::Transaction;
-use std::hash::{Hash, Hasher};
+// use std::hash::{Hash, Hasher};
 
 #[derive(Debug)]
 pub struct Block{
@@ -7,10 +7,32 @@ pub struct Block{
     timestamp:u64,
     payload: String,
     version: u16,
+    nonce: u16,
+    merkle: u32,
     tx: Vec<Transaction>,
-
 }
 
+impl Block{
+    pub fn new(
+        index:u64, 
+        timestamp:u64,
+        payload: String,
+        version: u16,
+        nonce: u16,
+        merkle: u32,
+        tx: Vec<Transaction>,
+    ) -> Self{
+        Self{
+            index,
+            timestamp,
+            payload,
+            version,
+            nonce,
+            merkle,
+            tx
+        }
+    }
+}
 
 
 
@@ -33,3 +55,24 @@ pub struct Block{
 //     Nonce
 
 
+
+
+// The Bitcoin blockchain is maintained by a distributed network of 
+
+// anonymous peers, and in order to add a block to the blockchain, 
+
+// an individual must undergo the proof of work mining process. 
+
+// This requires that a miner (the individual participating in the mining process) 
+
+// take data from the block header as an input, and then repeatedly run it through a 
+
+//cryptographic hashing algorithm, which for Bitcoin is Secure Hash Algorithm 256 (SHA-256). 
+
+//Miners will hash slight variations of the input data, which for the mining process will be
+
+//the nonce, until the hash of the header block results in a hash value that is less than or 
+
+//equal to the target hash value set by the network. Finding such a hash value during the 
+
+//mining process is known as a golden nonce.
