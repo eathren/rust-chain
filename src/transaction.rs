@@ -3,6 +3,7 @@ pub struct Transaction{
     version: u16,
     source: String,
     destination: String,
+    amount: u32,
 }
 
 
