@@ -1,9 +1,10 @@
 use crate::transaction::Transaction;
 use std::fmt::{  Debug };
-use sha2::{Sha256};
+// use sha2::{Sha256, Digest};
 use chrono::{DateTime,  Utc};
+use std::hash::{Hash};
 
-#[derive(Debug)]
+#[derive(Debug, Hash)]
 pub struct Block{
     pub index: u64,
     pub timestamp: DateTime<Utc>,
@@ -14,7 +15,6 @@ pub struct Block{
     pub tx: Vec<Transaction>,
     pub difficulty: u128,
 }
-
 
 impl Block{
     pub fn new(
@@ -38,48 +38,13 @@ impl Block{
         }
     }
 
+  
+
     // adds transaction to Block.tx
     pub fn add_transaction(&mut self, new_tx:Transaction) {
         self.tx.push(new_tx);
     }
 }
-
-    // pub fn mine( &mut self){
-    //     for nonce_attempt in 0..(u64::max_value()){
-    //         self.nonce = nonce_attempt;
-    //         let hash = self.hash();
-    //         if check_difficulty(&hash, self.difficulty){
-    //             self.hash = hash;
-    //             return;
-    //         }
-    //     }
-    // }
-   
-// pub fn check_difficulty (hash:  &Hash, difficulty: u128) -> bool {
-//     difficulty > difficulty_bytes_as_u128(&hash)
-// }
-
-// impl Hashable for Block{
-//     fn bytes (&self) -> Vec<u8> {
-//         let mut bytes = vec![];
-
-//         bytes.extend(&u32_bytes(&self.index));
-//         bytes.extend(&u64_bytes(&self.timestamp));
-//         bytes.extend(&self.prev_block_hash);
-//         bytes.extend(&u64_bytes(&self.nonce));
-//         bytes.extend(
-//             self.transactions
-//             .iter()
-//             .flat_map(|transaction| transaction.bytes())
-//             .collect::<Vec<u8>>()
-//         );
-//         bytes.extend(&u128_bytes(&self.difficulty));
-
-//         bytes
-
-
-//     }
-// }
 
 
 
