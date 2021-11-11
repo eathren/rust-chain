@@ -1,35 +1,40 @@
 use crate::transaction::Transaction;
-// use std::hash::{Hash, Hasher};
+use std::fmt::{  Debug };
+use sha2::{Sha256};
+use chrono::{DateTime,  Utc};
 
 #[derive(Debug)]
 pub struct Block{
-    index: u64,
-    timestamp:u64,
-    payload: String,
-    version: u16,
-    nonce: u16,
-    merkle: u32,
+    pub index: u64,
+    pub timestamp: DateTime<Utc>,
+    pub prev_block_hash: String,
+    pub hash: String,
+    pub version: u16,
+    pub nonce: u16,
     pub tx: Vec<Transaction>,
+    pub difficulty: u128,
 }
+
 
 impl Block{
     pub fn new(
         index:u64, 
-        timestamp:u64,
-        payload: String,
+        prev_block_hash: String,
+        hash: String,
         version: u16,
-        nonce: u16,
-        merkle: u32,
         tx: Vec<Transaction>,
+        difficulty: u128
     ) -> Self{
+        let time = chrono::offset::Utc::now();
         Self{
             index,
-            timestamp,
-            payload,
+            timestamp: time,
+            prev_block_hash,
+            hash,
             version,
-            nonce,
-            merkle,
-            tx
+            nonce: 0,
+            tx, 
+            difficulty,
         }
     }
 
@@ -38,6 +43,43 @@ impl Block{
         self.tx.push(new_tx);
     }
 }
+
+    // pub fn mine( &mut self){
+    //     for nonce_attempt in 0..(u64::max_value()){
+    //         self.nonce = nonce_attempt;
+    //         let hash = self.hash();
+    //         if check_difficulty(&hash, self.difficulty){
+    //             self.hash = hash;
+    //             return;
+    //         }
+    //     }
+    // }
+   
+// pub fn check_difficulty (hash:  &Hash, difficulty: u128) -> bool {
+//     difficulty > difficulty_bytes_as_u128(&hash)
+// }
+
+// impl Hashable for Block{
+//     fn bytes (&self) -> Vec<u8> {
+//         let mut bytes = vec![];
+
+//         bytes.extend(&u32_bytes(&self.index));
+//         bytes.extend(&u64_bytes(&self.timestamp));
+//         bytes.extend(&self.prev_block_hash);
+//         bytes.extend(&u64_bytes(&self.nonce));
+//         bytes.extend(
+//             self.transactions
+//             .iter()
+//             .flat_map(|transaction| transaction.bytes())
+//             .collect::<Vec<u8>>()
+//         );
+//         bytes.extend(&u128_bytes(&self.difficulty));
+
+//         bytes
+
+
+//     }
+// }
 
 
 
